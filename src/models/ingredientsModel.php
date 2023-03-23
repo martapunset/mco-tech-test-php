@@ -1,7 +1,7 @@
 <?php
 
 require("config/db.php");
-function get()
+function getAllIngredients()
     {  
         $pdo=connect();
         $query = $pdo->prepare("SELECT id, name, price
