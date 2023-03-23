@@ -5,13 +5,15 @@ require_once "src/models/ingredientsModel.php";
 require_once "src/models/PizzasModel.php";
 require_once "src/controllers/Controller.php";
 
-//$ingredients = getAllIngredients();
-//$allPizzas = getAllPizzas();
-//$currentPizza = getPizzasById(2);
-//print json_encode($currentPizza);
-//echo $ingredients[0]['name'];
+
 $controller= new Controller();
 $ingredients = $controller->getAllProducts();
+$currentPizza = $controller->getPizzasById(2);
+$request = $_REQUEST;
+if(isset($request["action"]) && $request["action"] == "addIngredient"){
+    $controller->update($request);
+}
+echo json_encode($currentPizza)
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -47,9 +49,9 @@ $ingredients = $controller->getAllProducts();
                         <?php
                         foreach ($currentPizza as $index => $ingredient) {
 
-                            echo "<li class='list-group-item'>" . $ingredient["name"] . " " . $ingredient["price"] . "$      git brancg <a class='btn btn-danger' href='?controller=Employee&action=removeIngredient&id=" . $ingredient["id"] . "'>-</a></li>";
+                            echo "<li class='list-group-item'>" . $ingredient["name"] . " " . $ingredient["price"] . "$       <a class='btn btn-danger' href='?controller=Employee&action=removeIngredient&id=" . $ingredient["ingredient_Id"] . "'>-</a></li>";
                         }
-                        echo "<li class='list-group-item'> <h1>Total Price <span>0.5 $</span></h1>    <a class='btn btn-danger' href='?controller=Employee&action=removeIngredient&id=" . $ingredient["id"] . "'>-</a></li>";
+                        echo "<li class='list-group-item'> <h1>Total Price <span>0.5 $</span></h1>    <a class='btn btn-danger' href='?controller=Employee&action=removeIngredient&id=" . $ingredient["ingredient_Id"] . "'>-</a></li>";
                         ?>
 
                     </ul>
@@ -81,7 +83,7 @@ $ingredients = $controller->getAllProducts();
                             echo "<td class='tg-0lax'>" . $ingredient["price"] . "</td>";
 
                             echo "<td colspan='2' class='tg-0lax'>
-                <a class='btn btn-secondary' href='?controller=Employee&action=addIngredient&id=" . $ingredient["id"] . "'>Add</a>
+                <a class='btn btn-secondary' href='?action=addIngredient&idIngredient=" . $ingredient["id"] . "&idPizza=" .$currentPizza[0]["pizza_Id"]."'>Add</a>
                
                 </td>";
                             echo "</tr>";
