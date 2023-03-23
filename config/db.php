@@ -1,11 +1,26 @@
 <?php
-require_once("config/constants.php");
-$host = HOST;
-$db = DB;
-$user = USER;
-$password = PASSWORD;
-$charset = CHARSET;
 
+
+
+require_once("config/constants.php");
+class Database
+{
+private $host ;
+private $db;
+private $user;
+private $password;
+private $charset;
+
+public function __construct()
+{
+    $this->host = HOST;
+    $this->db = DB;
+    $this->user = USER;
+    $this->password = PASSWORD;
+    $this->charset = CHARSET;
+}
+
+   
 function connect()
     {
         try {
@@ -27,3 +42,4 @@ function connect()
             require_once("dberror.php");
         }
     }
+}

@@ -1,8 +1,18 @@
 <?php
-function getAllPizzas()
-    {  
-        $pdo=connect();
-        $query = $pdo->prepare("SELECT p.id, p.pizza_name, p.price, i.price, i.name
+
+
+class PizzasModel
+{
+
+    protected $db;
+    function __construct()
+    {
+        $this->db = new Database();
+    }
+    function getAllPizzas()
+    {
+        //$pdo=connect();
+        $query = $this->db->connect()->prepare("SELECT p.id, p.pizza_name, p.price, i.price, i.name
         FROM pizzas p
         JOIN pizza_ingredients pi ON p.id = pi.pizza_id
         JOIN ingredients i ON pi.ingredient_id = i.id");
@@ -17,9 +27,9 @@ function getAllPizzas()
     }
 
     function getPizzasById($id)
-    {  
-        $pdo=connect();
-        $query = $pdo->prepare("SELECT i.price, i.name, i.id
+    {
+        // $pdo=connect();
+        $query = $this->db->connect()->prepare("SELECT i.price, i.name, i.id
         FROM pizzas p 
         JOIN pizza_ingredients pi ON p.id = pi.pizza_id
         JOIN ingredients i ON pi.ingredient_id = i.id
@@ -33,3 +43,4 @@ function getAllPizzas()
             return [];
         }
     }
+}

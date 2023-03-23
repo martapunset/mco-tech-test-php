@@ -3,13 +3,15 @@
 
 require_once "src/models/ingredientsModel.php";
 require_once "src/models/PizzasModel.php";
+require_once "src/controllers/Controller.php";
 
-$ingredients = getAllIngredients();
-$allPizzas = getAllPizzas();
-$currentPizza = getPizzasById(2);
+//$ingredients = getAllIngredients();
+//$allPizzas = getAllPizzas();
+//$currentPizza = getPizzasById(2);
 //print json_encode($currentPizza);
 //echo $ingredients[0]['name'];
-
+$controller= new Controller();
+$ingredients = $controller->getAllProducts();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -45,7 +47,7 @@ $currentPizza = getPizzasById(2);
                         <?php
                         foreach ($currentPizza as $index => $ingredient) {
 
-                            echo "<li class='list-group-item'>" . $ingredient["name"] . " " . $ingredient["price"] . "$      <a class='btn btn-secondary' href='?controller=Employee&action=addIngredient&id=" . $ingredient["id"] . "'>+</a>  <a class='btn btn-danger' href='?controller=Employee&action=removeIngredient&id=" . $ingredient["id"] . "'>-</a></li>";
+                            echo "<li class='list-group-item'>" . $ingredient["name"] . " " . $ingredient["price"] . "$      git brancg <a class='btn btn-danger' href='?controller=Employee&action=removeIngredient&id=" . $ingredient["id"] . "'>-</a></li>";
                         }
                         echo "<li class='list-group-item'> <h1>Total Price <span>0.5 $</span></h1>    <a class='btn btn-danger' href='?controller=Employee&action=removeIngredient&id=" . $ingredient["id"] . "'>-</a></li>";
                         ?>
