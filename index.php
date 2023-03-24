@@ -1,19 +1,26 @@
 <?php
-
-
 require_once "src/models/ingredientsModel.php";
 require_once "src/models/PizzasModel.php";
 require_once "src/controllers/Controller.php";
 
+$controller = new Controller();
+$ingredients = $controller->getAllIngredients();
+$currentPizza = $controller->getPizzaById(1);
+if ($currentPizza) {
+    $pizzaPrice = $controller->getPizzaByIdPrice($currentPizza[0]["pizza_Id"]);
+}
 
-$controller= new Controller();
-$ingredients = $controller->getAllProducts();
-$currentPizza = $controller->getPizzasById(2);
 $request = $_REQUEST;
-if(isset($request["action"]) && $request["action"] == "addIngredient"){
+
+if (isset($request["action"]) && $request["action"] == "addIngredient") {
+    echo "calling";
     $controller->addIngredient($request);
 }
-echo json_encode($currentPizza)
+if (isset($request["action"]) && $request["action"] == "deleteIngredient") {
+    echo "calling";
+    $controller->deleteIngredient($request);
+}
+//echo json_encode($currentPizza)
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -26,7 +33,7 @@ echo json_encode($currentPizza)
 </head>
 
 <body>
-    <h1>Pizza ingredients</h1>
+    <h1>Best pizzeria ever</h1>
     <style type="text/css">
 
     </style>
@@ -39,7 +46,7 @@ echo json_encode($currentPizza)
                     <img src="https://www.lanacion.com.ar/resizer/P12DrdN140M2NuxBkxcBQvnYUEY=/1200x800/filters:format(webp):quality(80)/cloudfront-us-east-1.images.arcpublishing.com/lanacionar/M7NX62ONAJGRHMGZQKL3UMOIG4.jpeg
   " class="card-img-top" alt="...">
                     <div class="card-body">
-                        <h5 class="card-title">Pizza</h5>
+                        <h5 class="card-title">Pizza <?php echo $currentPizza[0]["pizza_name"]; ?></h5>
                         <p class="card-text">Your pizza base is Mozzarella, Tomato and Oregano </p>
                         <p class="card-text">Add ingredients </p>
                     </div>
@@ -47,17 +54,18 @@ echo json_encode($currentPizza)
 
 
                         <?php
+
                         foreach ($currentPizza as $index => $ingredient) {
 
-                            echo "<li class='list-group-item'>" . $ingredient["name"] . " " . $ingredient["price"] . "$       <a class='btn btn-danger' href='?controller=Employee&action=removeIngredient&id=" . $ingredient["ingredient_Id"] . "'>-</a></li>";
+                            echo "<li class='list-group-item'>" . $ingredient["name"] . " " . $ingredient["price"] . "$       <a class='btn btn-danger' href='?action=deleteIngredient&idIngredient=" . $ingredient["ingredient_Id"] . "&idPizza=" . $currentPizza[0]["pizza_Id"] . "'>-</a></li>";
                         }
-                        echo "<li class='list-group-item'> <h1>Total Price <span>0.5 $</span></h1>    <a class='btn btn-danger' href='?controller=Employee&action=removeIngredient&id=" . $ingredient["ingredient_Id"] . "'>-</a></li>";
+                        echo "<li class='list-group-item'> <h1>Total Price <span> " . $pizzaPrice . " $ </span></h1>   ";
                         ?>
 
                     </ul>
                     <div class="card-body">
-                        <a href="#" class="card-link">Card link</a>
-                        <a href="#" class="card-link">Another link</a>
+                        <a class='btn btn-primary' href=''>Checkout</a></li>
+                        <a href="#" class="card-link">Back</a>
                     </div>
                 </div>
             </div>
@@ -82,16 +90,20 @@ echo json_encode($currentPizza)
                             echo "<td class='tg-0lax'>" . $ingredient["name"] . "</td>";
                             echo "<td class='tg-0lax'>" . $ingredient["price"] . "</td>";
 
+
                             echo "<td colspan='2' class='tg-0lax'>
-                <a class='btn btn-secondary' href='?action=addIngredient&idIngredient=" . $ingredient["id"] . "&idPizza=" .$currentPizza[0]["pizza_Id"]."'>Add</a>
-               
-                </td>";
+                            
+    <a class='btn btn-secondary' href='?action=addIngredient&idIngredient=" . $ingredient["id"] . "&idPizza=" . $currentPizza[0]["pizza_Id"] . "'>Add</a>
+   
+    </td>";
                             echo "</tr>";
                         }
+
+
                         ?>
                     </tbody>
                 </table>
-                <a id="home" class="btn btn-primary" href="?controller=Employee&action=createEmployee">Create</a>
+
                 <a id="home" class="btn btn-secondary" href="./">Back</a>
             </div>
 
