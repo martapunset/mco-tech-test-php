@@ -31,6 +31,16 @@ CREATE TABLE pizza_ingredients (
   PRIMARY KEY (id)
 );
 
+
+CREATE TABLE pizza_extra_ingredients (
+  id INT NOT NULL AUTO_INCREMENT,
+  pizza_id INT NOT NULL,
+  ingredient_id INT NOT NULL,
+  FOREIGN KEY (pizza_id) REFERENCES pizzas(id) ,
+  FOREIGN KEY (ingredient_id) REFERENCES ingredients(id),
+  PRIMARY KEY (id)
+);
+
 -- insert of data
 
 INSERT INTO ingredients (name, price)
@@ -54,6 +64,14 @@ VALUES
 
 
 INSERT INTO pizza_ingredients (pizza_id, ingredient_id)
+VALUES
+  (1, 2),
+  (1, 3),
+  (2, 2),
+  (2, 5);
+
+  
+INSERT INTO pizza_extra_ingredients (pizza_id, ingredient_id)
 VALUES
   (1, 2),
   (1, 3),

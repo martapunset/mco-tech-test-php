@@ -74,4 +74,8 @@ class Controller
             header("Location: dashboard.php?action=getPizza&pizza_id=" . $request["idPizza"]);
         }
     }
+    function getIngredientsById($id){
+        $ingredients = $this->pizzasModel->getIngredientsById($id);
+        return $ingredients;
+    }
 }

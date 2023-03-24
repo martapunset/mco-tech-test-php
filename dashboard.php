@@ -2,30 +2,8 @@
 require_once "src/models/ingredientsModel.php";
 require_once "src/models/PizzasModel.php";
 require_once "src/controllers/Controller.php";
+require_once "src/controllers/requestsDashboard.php";
 
-$controller = new Controller();
-$request = $_REQUEST;
-$ingredients = $controller->getAllIngredients();
-if (isset($request["action"]) && $request["action"] == "getPizza") {
-    $id= $request["pizza_id"];
-    $currentPizza = $controller->getPizzaById($id);
-    var_dump($currentPizza);
-if (sizeof($currentPizza)>0) {
-    $pizzaPrice = $controller->getPizzaByIdPrice($currentPizza[0]["pizza_Id"]);
-}
-   
-}
-
-
-
-if (isset($request["action"]) && $request["action"] == "addIngredient") {
-    echo "calling";
-    $controller->addIngredient($request);
-}
-if (isset($request["action"]) && $request["action"] == "deleteIngredient") {
-    echo "calling";
-    $controller->deleteIngredient($request);
-}
 //echo json_encode($currentPizza)
 ?>
 <!DOCTYPE html>
@@ -36,22 +14,21 @@ if (isset($request["action"]) && $request["action"] == "deleteIngredient") {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
 </head>
 
 <body>
-    <h1>Best pizzeria ever</h1>
-    <style type="text/css">
-
-    </style>
+    <?php include("assets\header.php"); ?>
 
 
     <div class="container text-center">
-        <div class="row">
+        <div class="row m-5  d-flex flex-wrap p-3  ">
             <div class="col">
                 <div class="card" style="width: 28rem;">
                     <img src="https://www.lanacion.com.ar/resizer/P12DrdN140M2NuxBkxcBQvnYUEY=/1200x800/filters:format(webp):quality(80)/cloudfront-us-east-1.images.arcpublishing.com/lanacionar/M7NX62ONAJGRHMGZQKL3UMOIG4.jpeg
   " class="card-img-top" alt="...">
                     <div class="card-body">
+                        >
                         <h5 class="card-title">Pizza <?php echo $currentPizza[0]["pizza_name"]; ?></h5>
                         <p class="card-text">Your pizza base is Mozzarella, Tomato and Oregano </p>
                         <p class="card-text">Add ingredients </p>
@@ -60,12 +37,19 @@ if (isset($request["action"]) && $request["action"] == "deleteIngredient") {
 
 
                         <?php
-                         if($currentPizza){
-                        foreach ($currentPizza as $index => $ingredient) {
+                        if ($currentPizza) {
+                            foreach ($currentPizza as $index => $ingredient) {
 
-                            echo "<li class='list-group-item'>" . $ingredient["name"] . " " . $ingredient["price"] . "$       <a class='btn btn-danger' href='?action=deleteIngredient&idIngredient=" . $ingredient["ingredient_Id"] . "&idPizza=" . $currentPizza[0]["pizza_Id"] . "'>-</a></li>";
+                                echo "<li class='list-group-item'>" . $ingredient["name"] . " " . $ingredient["price"] . "$    </li>";
+                            }
                         }
-                    }
+
+                        if ($ingredientsById) {
+                            foreach ($ingredientsById as $index => $ingredient) {
+
+                                echo "<li class='list-group-item'> + " . $ingredient["name"] . " " . $ingredient["price"] . "      <a  href='?action=deleteIngredient&idIngredient=" . $ingredient["ingredient_Id"] . "&idPizza=" . $currentPizza[0]["pizza_Id"] . "'><i class='bi bi-trash'></i></a></li>";
+                            }
+                        }
                         echo "<li class='list-group-item'> <h1>Total Price <span> " . $pizzaPrice . " $ </span></h1>   ";
                         ?>
 
@@ -77,7 +61,7 @@ if (isset($request["action"]) && $request["action"] == "deleteIngredient") {
                 </div>
             </div>
             <div class="col">
-                <h1>Add more ingredients to your base</h1>
+                <h5 class="card-title m-2">Add more ingredients to your base</h5>
                 <table class="table">
                     <thead>
                         <tr>

@@ -2,26 +2,7 @@
 require_once "src/models/ingredientsModel.php";
 require_once "src/models/PizzasModel.php";
 require_once "src/controllers/Controller.php";
-
-$controller = new Controller();
-$ingredients = $controller->getAllIngredients();
-//$currentPizza = $controller->getCustomPizzaById(1);
-$pizzas=$controller->getAllPizzas();
-var_dump($pizzas);
-if ($currentPizza) {
-    $pizzaPrice = $controller->getPizzaByIdPrice($currentPizza[0]["pizza_Id"]);
-}
-
-$request = $_REQUEST;
-
-if (isset($request["action"]) && $request["action"] == "addIngredient") {
-    echo "calling";
-    $controller->addIngredient($request);
-}
-if (isset($request["action"]) && $request["action"] == "deleteIngredient") {
-    echo "calling";
-    $controller->deleteIngredient($request);
-}
+require_once "src/controllers/requestsIndex.php";
 //echo json_encode($currentPizza)
 ?>
 <!DOCTYPE html>
@@ -35,36 +16,31 @@ if (isset($request["action"]) && $request["action"] == "deleteIngredient") {
 </head>
 
 <body class="">
-    <h1>Best pizzeria ever</h1>
-    <style type="text/css">
 
-    </style>
+    <?php include("assets\header.php"); ?>
+    <div class="row m-5 center justify-content-center">
+        <div class="col-auto d-flex flex-wrap p-3  ">
 
-  <div class="row m-5 center justify-content-center">
-    <div class="col-auto d-flex flex-wrap p-3  ">
-    
             <!-- card-->
 
-            <?php  
-             
-foreach ($pizzas as $pizza) {
-    //$currentPizza = $pizza["ingredients"];
-   // $pizzaPrice = $pizza["price"];
+            <?php
 
-    // Echo the card snippet for each pizza
-    echo '
+            foreach ($pizzas as $pizza) {
+
+                // Echo the card snippet for each pizza
+                echo '
             <div class="card m-3" style="width: 22rem;">
-                <a href="dashboard.php?action=getPizza&pizza_id='.$pizza["id"].'"><img src="https://www.lanacion.com.ar/resizer/P12DrdN140M2NuxBkxcBQvnYUEY=/1200x800/filters:format(webp):quality(80)/cloudfront-us-east-1.images.arcpublishing.com/lanacionar/M7NX62ONAJGRHMGZQKL3UMOIG4.jpeg" class="card-img-top" alt="..."></a>
+                <a href="dashboard.php?action=getPizza&pizza_id=' . $pizza["id"] . '"><img src="https://www.lanacion.com.ar/resizer/P12DrdN140M2NuxBkxcBQvnYUEY=/1200x800/filters:format(webp):quality(80)/cloudfront-us-east-1.images.arcpublishing.com/lanacionar/M7NX62ONAJGRHMGZQKL3UMOIG4.jpeg" class="card-img-top" alt="..."></a>
                 <div class="card-body">
                     <h5 class="card-title">Pizza ' . $pizza["pizza_name"] . '</h5>
-                    <p class="card-text">' . $pizza["description"] .'</p>
+                    <p class="card-text">' . $pizza["description"] . '</p>
                     <p class="card-text">Add ingredients </p>
                 </div>
                 <ul class="list-group list-group-flush">';
-    
-    
 
-    echo '<li class="list-group-item"> <h1>Total Price <span> ' . $pizza["price"] . ' $ </span></h1></li>
+
+
+                echo '<li class="list-group-item"> <h1>Total Price <span> ' . $pizza["price"] . ' $ </span></h1></li>
         </ul>
         <div class="card-body">
             <a class="btn btn-primary" href="">Checkout</a>
@@ -72,30 +48,13 @@ foreach ($pizzas as $pizza) {
         </div>
 
 </div>';
-};
+            };
 
-       
-                                 
-                            
-                            
-                          
-               
-                  
-                        ?>
+            ?>
 
-
-
-
-
-</div>
-
-       
-
+        </div>
     </div>
-</div>
-
-    
-
+    </div>
 </body>
 
 </html>

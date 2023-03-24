@@ -25,7 +25,7 @@ class PizzasModel
     }
     function getPizzaById($id)
     {
-        $query = $this->db->connect()->prepare("SELECT p.id AS pizza_Id, p.description, p.pizza_name, i.price, i.name, i.id AS ingredient_Id
+        $query = $this->db->connect()->prepare("SELECT p.id AS pizza_Id, p.price AS pizza_price, p.description, p.pizza_name AS pizza_name, i.price, i.name, i.id AS ingredient_Id
         FROM pizzas p 
         JOIN pizza_ingredients pi ON p.id = pi.pizza_id
         JOIN ingredients i ON pi.ingredient_id = i.id
@@ -40,11 +40,11 @@ class PizzasModel
         }
     }
 
-    function getCustomPizzaById($id)
+    function getIngredientsById($id)
     {
-        $query = $this->db->connect()->prepare("SELECT p.id as pizza_Id, p.pizza_name, i.price, i.name, i.id as ingredient_Id
+        $query = $this->db->connect()->prepare("SELECT   i.price, i.name, i.id as ingredient_Id
         FROM pizzas p 
-         JOIN pizza_ingredients pi ON p.id = pi.pizza_id
+         JOIN pizza_extra_ingredients pi ON p.id = pi.pizza_id
         JOIN ingredients i ON pi.ingredient_id = i.id
         WHERE p.id = $id");
 
@@ -58,9 +58,9 @@ class PizzasModel
     }
     function getPizzaByIdPrice($id)
     {  
-        $query = $this->db->connect()->prepare(" SELECT SUM(i.price) + p.price AS total_price
+        $query = $this->db->connect()->prepare(" SELECT SUM(i.price)+ 0.5*(SUM(i.price)) + p.price AS total_price
         FROM pizzas p 
-        JOIN pizza_ingredients pi ON p.id = pi.pizza_id
+        JOIN pizza_extra_ingredients pi ON p.id = pi.pizza_id
         JOIN ingredients i ON pi.ingredient_id = i.id
         WHERE p.id = $id;");
 
@@ -80,7 +80,7 @@ class PizzasModel
         $pizza_id = $request["idPizza"];
         $ingredient_id= $request["idIngredient"];
        
-        $query = $this->db->connect()->prepare(" INSERT INTO pizza_ingredients (pizza_id, ingredient_id) 
+        $query = $this->db->connect()->prepare(" INSERT INTO pizza_extra_ingredients (pizza_id, ingredient_id) 
         VALUES('$pizza_id', '$ingredient_id');");
     
         try {
@@ -99,7 +99,7 @@ class PizzasModel
         $pizza_id = $request["idPizza"];
         $ingredient_id= $request["idIngredient"];
         
-        $query = $this->db->connect()->prepare("DELETE FROM pizza_ingredients WHERE pizza_id = $pizza_id AND ingredient_id = $ingredient_id");
+        $query = $this->db->connect()->prepare("DELETE FROM pizza_extra_ingredients WHERE pizza_id = $pizza_id AND ingredient_id = $ingredient_id");
         try {
             $query->execute();
             echo "working delete";
