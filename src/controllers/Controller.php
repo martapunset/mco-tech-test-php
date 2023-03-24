@@ -16,7 +16,7 @@ class Controller
         $this->ingredientsModel = new IngredientsModel();
         $this->pizzasModel = new PizzasModel();
     }
-    
+
 
     function getAllProducts()
     {
@@ -40,20 +40,30 @@ class Controller
 
         return $currentPizza;
     }
-    function update($request)
+    function addIngredient($request)
     {
-      
-            $currentPizza = $this->pizzasModel->update($request);
-            return $currentPizza;
 
-         //   if ($products[0]) {
-           //     header("Location: index.php?controller=Admin&action=getAllProducts");
-          ///  } else {
-               // $this->action = $request["action"];
-              //  $this->error = "The data entered is incorrect, check that there is no other employee with that email.";
-               // $this->view->render("adminView/updateProduct");
-     //    } else {
-         //   $this->view->render("adminView/adminDashboard");
-        //}
+        $requestOK = $this->pizzasModel->addIngredient($request);
+        //$currentPizza = $this->pizzasModel->getPizzasById($request["idPizza"]);
+
+
+        if ($requestOK) {
+            header("Location: index.php?");
+        }
+
+        //else {
+        // $this->action = $request["action"];
+        //  $this->error = "The data entered is incorrect, check that there is no other employee with that email.";
+
+        //  } 
     }
+     function deleteIngredient($request)
+     {
+            
+            $requestOK = $this->pizzasModel->deleteIngredient($request);
+            if ($requestOK) {
+                header("Location: index.php?");
+            }
+           
+     }
 }

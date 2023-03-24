@@ -46,31 +46,27 @@ class PizzasModel
     
     
 
-    function update($request)
+    function addIngredient($request)
     {
-        $pizza_id = $request["idIngredient"];
-        $ingredient_id= $request["idPizza"];
+        $pizza_id = $request["idPizza"];
+        $ingredient_id= $request["idIngredient"];
         
-        echo json_encode($request);
-        return $request;
-    /*
+        //echo json_encode($request);
+      //  return $request;
 
-
-        $query = $this->db->connect()->prepare(" UPDATE products
-        SET title = '$title', description = '$description', location = '$location', pre_build = '$pre_build', size = '$size', price = '$price', img = '$img'
-        WHERE id = '$id' ;");
-
-        
-        
-
+        $query = $this->db->connect()->prepare(" INSERT INTO pizza_ingredients (pizza_id, ingredient_id) 
+        VALUES('$pizza_id', '$ingredient_id')");
+    
         try {
             $query->execute();
+            echo "working add";
             return [true];
         } catch (PDOException $e) {
+            echo $e;
             return [false, $e];
         }
         
     }
-*/
+
 }
-}
+

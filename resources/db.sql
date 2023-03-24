@@ -23,11 +23,12 @@ CREATE TABLE pizzas (
 );
 
 CREATE TABLE pizza_ingredients (
-  id  INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  id INT NOT NULL AUTO_INCREMENT,
   pizza_id INT NOT NULL,
   ingredient_id INT NOT NULL,
-  FOREIGN KEY (pizza_id) REFERENCES pizzas(id) ON DELETE CASCADE,
-  FOREIGN KEY (ingredient_id) REFERENCES ingredients(id) ON DELETE CASCADE
+  FOREIGN KEY (pizza_id) REFERENCES pizzas(id) ,
+  FOREIGN KEY (ingredient_id) REFERENCES ingredients(id),
+  PRIMARY KEY (id)
 );
 
 -- insert of data
@@ -57,23 +58,11 @@ VALUES
   (1, 2),
   (1, 3),
   (2, 2),
-  (2, 5),
-  (2, 2),
-  (2, 2);
+  (2, 5);
   
 
+  
 
-/*
-INSERT INTO pizza_ingredients (pizza_id, ingredient_id)
-VALUES
-  (1, (SELECT ingredient_id FROM ingredients WHERE name = 'tomato')),
-  (1, (SELECT ingredient_id FROM ingredients WHERE name = 'mozzarella cheese')),
-  (2, (SELECT ingredient_id FROM ingredients WHERE name = 'tomato')),
-  (2, (SELECT ingredient_id FROM ingredients WHERE name = 'mozzarella cheese')),
-  (2, (SELECT ingredient_id FROM ingredients WHERE name = 'ham')),
-  (2, (SELECT ingredient_id FROM ingredients WHERE name = 'sliced mushrooms'))
-
-*/
 
 /*
 UPDATE pizzas p

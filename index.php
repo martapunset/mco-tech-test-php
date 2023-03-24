@@ -11,7 +11,7 @@ $ingredients = $controller->getAllProducts();
 $currentPizza = $controller->getPizzasById(2);
 $request = $_REQUEST;
 if(isset($request["action"]) && $request["action"] == "addIngredient"){
-    $controller->update($request);
+    $controller->addIngredient($request);
 }
 echo json_encode($currentPizza)
 ?>
