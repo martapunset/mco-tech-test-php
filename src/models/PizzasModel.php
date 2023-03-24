@@ -42,7 +42,7 @@ class PizzasModel
 
     function getIngredientsById($id)
     {
-        $query = $this->db->connect()->prepare("SELECT   i.price, i.name, i.id as ingredient_Id
+        $query = $this->db->connect()->prepare("SELECT i.price, i.name, i.id as ingredient_Id
         FROM pizzas p 
          JOIN pizza_extra_ingredients pi ON p.id = pi.pizza_id
         JOIN ingredients i ON pi.ingredient_id = i.id
@@ -58,7 +58,7 @@ class PizzasModel
     }
     function getPizzaByIdPrice($id)
     {  
-        $query = $this->db->connect()->prepare(" SELECT SUM(i.price)+ 0.5*(SUM(i.price)) + p.price AS total_price
+        $query = $this->db->connect()->prepare(" SELECT CAST(SUM(i.price)+ 0.5*SUM(i.price) + p.price AS DECIMAL(10,2)) AS total_price
         FROM pizzas p 
         JOIN pizza_extra_ingredients pi ON p.id = pi.pizza_id
         JOIN ingredients i ON pi.ingredient_id = i.id
@@ -85,7 +85,7 @@ class PizzasModel
     
         try {
             $query->execute();
-            echo "working add";
+           
             return [true];
         } catch (PDOException $e) {
             echo $e;

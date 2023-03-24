@@ -6,8 +6,7 @@ require_once("src\models\PizzasModel.php");
 class Controller
 {
 
-    public $view;
-    public $pizzasModel;
+    protected $pizzasModel;
     protected $ingredientsModel;
 
     function __construct()
@@ -20,7 +19,6 @@ class Controller
 
     function getAllIngredients()
     {
-
         $ingredients = $this->ingredientsModel->getAllIngredients();
 
         return $ingredients;
@@ -33,47 +31,45 @@ class Controller
 
         return $pizzas;
     }
+
     function getPizzaById($id)
     {
 
         $currentPizza = $this->pizzasModel->getPizzaById($id);
+        // If the pizza doesn't exist, we return the first pizza
         if (!$currentPizza) {
             $currentPizza = $this->pizzasModel->getPizzaById(1);
         }
 
         return $currentPizza;
     }
-    
+
+    /* Returns the total price of pizza extra ingredients */
     function getPizzaByIdPrice($id)
     {
 
         $currentPizzaPrice = $this->pizzasModel->getPizzaByIdPrice($id);
         
-
         return $currentPizzaPrice;
     }
+
     function addIngredient($request)
     {
-    
         $requestOK = $this->pizzasModel->addIngredient($request);
         if ($requestOK) {
             header("Location: dashboard.php?action=getPizza&pizza_id=" . $request["idPizza"]);
         }
-
-        //else {
-        // $this->action = $request["action"];
-        //  $this->error = "The data entered is incorrect, check that there is no other employee with that email.";
-
-        //  } 
     }
+
     function deleteIngredient($request)
     {
-
         $requestOK = $this->pizzasModel->deleteIngredient($request);
         if ($requestOK) {
             header("Location: dashboard.php?action=getPizza&pizza_id=" . $request["idPizza"]);
         }
     }
+
+   /* Returns the extra ingredients of a pizza */
     function getIngredientsById($id){
         $ingredients = $this->pizzasModel->getIngredientsById($id);
         return $ingredients;
