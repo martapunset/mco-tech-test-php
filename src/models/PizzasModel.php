@@ -12,10 +12,8 @@ class PizzasModel
     function getAllPizzas()
     {
       
-        $query = $this->db->connect()->prepare("SELECT p.id, p.pizza_name, p.price, i.price, i.name
-        FROM pizzas p
-        JOIN pizza_ingredients pi ON p.id = pi.pizza_id
-        JOIN ingredients i ON pi.ingredient_id = i.id");
+        $query = $this->db->connect()->prepare("SELECT id, pizza_name, price, description
+        FROM pizzas");
 
         try {
             $query->execute();
@@ -25,12 +23,28 @@ class PizzasModel
             return [];
         }
     }
-
     function getPizzaById($id)
+    {
+        $query = $this->db->connect()->prepare("SELECT p.id AS pizza_Id, p.description, p.pizza_name, i.price, i.name, i.id AS ingredient_Id
+        FROM pizzas p 
+        JOIN pizza_ingredients pi ON p.id = pi.pizza_id
+        JOIN ingredients i ON pi.ingredient_id = i.id
+        WHERE p.id = $id");
+
+        try {
+            $query->execute();
+            $pizzas = $query->fetchAll();
+            return $pizzas;
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
+
+    function getCustomPizzaById($id)
     {
         $query = $this->db->connect()->prepare("SELECT p.id as pizza_Id, p.pizza_name, i.price, i.name, i.id as ingredient_Id
         FROM pizzas p 
-        JOIN pizza_ingredients pi ON p.id = pi.pizza_id
+         JOIN pizza_ingredients pi ON p.id = pi.pizza_id
         JOIN ingredients i ON pi.ingredient_id = i.id
         WHERE p.id = $id");
 

@@ -43,22 +43,21 @@ class Controller
 
         return $currentPizza;
     }
+    
     function getPizzaByIdPrice($id)
     {
 
         $currentPizzaPrice = $this->pizzasModel->getPizzaByIdPrice($id);
-        if (!$currentPizzaPrice) {
-            $currentPizza = $this->pizzasModel->getPizzaById(1);
-        }
+        
 
         return $currentPizzaPrice;
     }
     function addIngredient($request)
     {
-
+    
         $requestOK = $this->pizzasModel->addIngredient($request);
         if ($requestOK) {
-            header("Location: index.php?");
+            header("Location: dashboard.php?action=getPizza&pizza_id=" . $request["idPizza"]);
         }
 
         //else {
@@ -72,7 +71,7 @@ class Controller
 
         $requestOK = $this->pizzasModel->deleteIngredient($request);
         if ($requestOK) {
-            header("Location: index.php?");
+            header("Location: dashboard.php?action=getPizza&pizza_id=" . $request["idPizza"]);
         }
     }
 }
