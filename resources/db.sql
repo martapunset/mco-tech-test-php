@@ -40,7 +40,12 @@ CREATE TABLE pizza_extra_ingredients (
   FOREIGN KEY (ingredient_id) REFERENCES ingredients(id),
   PRIMARY KEY (id)
 );
-
+CREATE VIEW pizza_prices AS
+SELECT p.id, p.pizza_name, p.description, CAST(SUM(i.price)+ 0.5*SUM(i.price) AS DECIMAL(10,2)) AS total_price
+FROM pizzas p 
+JOIN pizza_ingredients pi ON p.id = pi.pizza_id
+JOIN ingredients i ON pi.ingredient_id = i.id
+GROUP BY p.id, p.pizza_name;
 -- insert of data
 
 INSERT INTO ingredients (name, price)
