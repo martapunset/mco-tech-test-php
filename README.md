@@ -1,8 +1,10 @@
 # mco-tech-test-php
+This pizza shop aplication is build entirely in PHP, HTML5, Bootstrap and mySQL database <br>
+
 
 ## Install steps
 
-This pizza shop aplication is build entirely in PHP, HTML5, Bootstrap and mySQL database
+
 -Clone the repository in your local
 
 -Run install-db-script.sql file in phpMyAdmin(for example) in order to create the database with the app data in your local machine. This file is stored in resources folder inside the project
@@ -12,6 +14,8 @@ This pizza shop aplication is build entirely in PHP, HTML5, Bootstrap and mySQL 
 npm i bootstrap@5.3.0-alpha2
 
 npm i bootstrap-icons
+
+## Dependencies
 
  "dependencies": {
     "bootstrap": "^5.3.0-alpha1",
