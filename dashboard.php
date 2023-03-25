@@ -2,7 +2,7 @@
 require_once "src/models/ingredientsModel.php";
 require_once "src/models/PizzasModel.php";
 require_once "src/controllers/Controller.php";
-require_once "src/controllers/requestsDashboard.php";
+require_once "src/controllers/DashboardRequests.php";
 
 //echo json_encode($currentPizza)
 ?>
@@ -18,7 +18,7 @@ require_once "src/controllers/requestsDashboard.php";
 </head>
 
 <body>
-    <?php include("assets\header.php"); ?>
+    <?php include("html\header.php"); ?>
 
 
     <main class="container text-center">
@@ -37,8 +37,9 @@ require_once "src/controllers/requestsDashboard.php";
 
 
                     <?php
-                    if ($currentPizza) {
-                        foreach ($currentPizza as $index => $ingredient) {
+
+                    if ($defaultIngredients) {
+                        foreach ($defaultIngredients as $index => $ingredient) {
 
                             echo "<li class='list-group-item'>" . $ingredient["name"] . " " . $ingredient["price"] . "$    </li>";
                         }
@@ -47,12 +48,12 @@ require_once "src/controllers/requestsDashboard.php";
                     if ($ingredientsById) {
                         foreach ($ingredientsById as $index => $ingredient) {
 
-                            echo "<li class='list-group-item'> + " . $ingredient["name"] . " " . $ingredient["price"] . "      <a  href='?action=deleteIngredient&idIngredient=" . $ingredient["ingredient_Id"] . "&idPizza=" . $currentPizza[0]["pizza_Id"] . "'><i class='bi bi-trash'></i></a></li>";
+                            echo "<li class='list-group-item'> + " . $ingredient["name"] . " " . $ingredient["price"] . "      <a  href='?action=deleteIngredient&idIngredient=" . $ingredient["ingredient_Id"] . "&idPizza=" . $currentPizza[0]["id"] . "'><i class='bi bi-trash'></i></a></li>";
                         }
                     } else {
                         echo "<li class='list-group-item'><h5>No extra ingredients added yet</h5></li>";
                     }
-                    echo "<li class='list-group-item'> <h1>Total Price <span> " . $pizzaPrice . " $ </span></h1>   ";
+                    echo "<li class='list-group-item'> <h1>Total Price <span> " . $currentPizza[0]["total_price"] . " $ </span></h1>   ";
                     ?>
 
                 </ul>
@@ -86,7 +87,7 @@ require_once "src/controllers/requestsDashboard.php";
                                 echo "<td class='tg-0lax'>" . $ingredient["price"] . " $</td>";
                                 echo "<td colspan='2' class='tg-0lax'>
                             
-    <a class='btn btn-secondary' href='?action=addIngredient&idIngredient=" . $ingredient["id"] . "&idPizza=" . $currentPizza[0]["pizza_Id"] . "'>Add</a>
+    <a class='btn btn-secondary' href='?action=addIngredient&idIngredient=" . $ingredient["id"] . "&idPizza=" . $currentPizza[0]["id"] . "'>Add</a>
    
     </td>";
                                 echo "</tr>";

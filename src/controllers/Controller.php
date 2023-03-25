@@ -44,14 +44,6 @@ class Controller
         return $currentPizza;
     }
 
-    /* Returns the total price of pizza extra ingredients */
-    function getPizzaByIdPrice($id)
-    {
-
-        $currentPizzaPrice = $this->pizzasModel->getPizzaByIdPrice($id);
-        
-        return $currentPizzaPrice;
-    }
 
     function addIngredient($request)
     {
@@ -73,5 +65,9 @@ class Controller
     function getIngredientsById($id){
         $ingredients = $this->pizzasModel->getIngredientsById($id);
         return $ingredients;
+    }
+    function getDefaultIngredients($id){
+        $defaultIngredients = $this->pizzasModel->getDefaultIngredientsById($id);
+        return $defaultIngredients;
     }
 }

@@ -2,7 +2,7 @@
 require_once "src/models/ingredientsModel.php";
 require_once "src/models/PizzasModel.php";
 require_once "src/controllers/Controller.php";
-require_once "src/controllers/requestsIndex.php";
+require_once "src/controllers/IndexRequests.php";
 
 ?>
 <!DOCTYPE html>
@@ -17,7 +17,7 @@ require_once "src/controllers/requestsIndex.php";
 
 <body class="">
 
-    <?php include("assets\header.php"); ?>
+    <?php include("html\header.php"); ?>
     <main class="row m-5 center justify-content-center">
         <div class="col-auto d-flex flex-wrap p-3  ">
 
@@ -25,6 +25,7 @@ require_once "src/controllers/requestsIndex.php";
 
             <?php
             if ($pizzas) {
+              
             foreach ($pizzas as $pizza) {
 
                 echo '
@@ -36,7 +37,7 @@ require_once "src/controllers/requestsIndex.php";
                 
                 </div>
                 <ul class="list-group list-group-flush">';
-                echo '<li class="list-group-item"> <h3>Total Price <span> ' . $pizza["price"] . ' $ </span></h3></li>
+                echo '<li class="list-group-item"> <h3>Total Price <span> ' . $pizza["total_price"] . ' $ </span></h3></li>
                 </ul>
                 <div class="card-body">
                     <a href="dashboard.php?action=getPizza&pizza_id=' . $pizza["id"] . '"class="btn btn-secondary" href="">Order</a>
