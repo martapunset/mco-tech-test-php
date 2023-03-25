@@ -2,7 +2,7 @@
 require_once "src/models/ingredientsModel.php";
 require_once "src/models/PizzasModel.php";
 require_once "src/controllers/Controller.php";
-require_once "src/controllers/requestsIndex.php";
+require_once "src/controllers/IndexRequests.php";
 
 ?>
 <!DOCTYPE html>
@@ -25,7 +25,7 @@ require_once "src/controllers/requestsIndex.php";
 
             <?php
             if ($pizzas) {
-                var_dump($pizzas);
+              
             foreach ($pizzas as $pizza) {
 
                 echo '

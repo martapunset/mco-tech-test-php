@@ -30,10 +30,12 @@ class PizzasModel
         JOIN pizza_ingredients pi ON p.id = pi.pizza_id
         JOIN ingredients i ON pi.ingredient_id = i.id
         WHERE p.id = $id");
+  
+  $query2=$this->db->connect()->prepare("SELECT * FROM pizza_prices  WHERE id = $id;");
 
         try {
-            $query->execute();
-            $pizzas = $query->fetchAll();
+            $query2->execute();
+            $pizzas = $query2->fetchAll();
             return $pizzas;
         } catch (PDOException $e) {
             return false;
@@ -56,24 +58,23 @@ class PizzasModel
             return false;
         }
     }
-    function getPizzaByIdPrice($id)
-    {  
-        $query = $this->db->connect()->prepare(" SELECT CAST(SUM(i.price)+ 0.5*SUM(i.price) AS DECIMAL(10,2)) AS total_price
+    function getDefaultIngredientsById($id)
+    {
+        $query = $this->db->connect()->prepare("SELECT i.price, i.name, i.id as ingredient_Id
         FROM pizzas p 
-        JOIN pizza_ingredients pi ON p.id = pi.pizza_id
+         JOIN pizza_ingredients pi ON p.id = pi.pizza_id
         JOIN ingredients i ON pi.ingredient_id = i.id
-        WHERE p.id = $id;");
+        WHERE p.id = $id");
 
         try {
             $query->execute();
-            $pizzaPrice = $query->fetch();
-            return $pizzaPrice[0];
+            $pizzas = $query->fetchAll();
+            return $pizzas;
         } catch (PDOException $e) {
             return false;
         }
-       
     }
-    
+   
 
     function addIngredient($request)
     {
